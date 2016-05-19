@@ -7,7 +7,7 @@ Checkout the physics validation code
     cmsenv
     git clone https://github.com/cms-mual/MuAlPhysicsValidation.git -b CMSSW_8_0_X
 
-1. Refitting
+I. Refitting
 
 1a. Change directory to MuAlRefit:
 
@@ -26,7 +26,7 @@ Checkout the physics validation code
     python createJobs_newGT.py
     source submit.sh
 
-2. Analysis
+II. Analysis
 
 2a. Change directory to MuAlAnalyzer:
 
@@ -41,7 +41,7 @@ Checkout the physics validation code
     
 2d. hadd outout ROOT files into a single ROOT file.
 
-3. Plotting
+III. Plotting
 
 3a. Change directory to PerformancePlots:
 
