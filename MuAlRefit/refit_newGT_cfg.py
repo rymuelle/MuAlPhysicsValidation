@@ -20,8 +20,8 @@ process.MessageLogger = cms.Service("MessageLogger",
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 process.GlobalTag.globaltag = "74X_dataRun2_Candidate_2015_11_17_15_55_10"
 
-process.load("Configuration.Geometry.GeometryExtended2015Reco_cff")
-process.load('Configuration.StandardSequences.MagneticField_38T_PostLS1_cff')
+process.load("Configuration.Geometry.GeometryExtended2016Reco_cff")
+process.load('Configuration.StandardSequences.MagneticField_cff')
 
 process.load("Configuration.StandardSequences.Reconstruction_cff")
 process.load("RecoTracker.TrackProducer.TrackRefitter_cfi")
