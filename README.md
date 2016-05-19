@@ -15,7 +15,7 @@ Checkout the physics validation code
 
 1b. Use **createJobs_newGT.py** to create a new python script.
 
-1c. Check the output location in L21 in other options in L26-L29.
+1c. Check the output location in L21 and other options in L26-L29.
 
 1d. Use **refit_newGT_cfg.py** to create a new python configuration file.
 
@@ -25,3 +25,18 @@ Checkout the physics validation code
 
     python createJobs_newGT.py
     source submit.sh
+
+2. Analysis
+
+2a. Change directory to MuAlAnalyzer:
+
+        cd ../MuAlAnalyzer
+
+2b. Create a filelist for the sample to be analyzed.
+
+2c. Create and submit analyzer jobs, provide working directory name, filelist name, and total number of jobs:
+
+    python createJobs.py $WORKDIR$ $FILELIST$ $N_JOBS$
+    source submit.sh
+    
+2d. hadd outout ROOT file into a single ROOT file.
