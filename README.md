@@ -36,12 +36,14 @@ Checkout the physics validation code
 
 2b. Create a filelist for the sample to be analyzed.
 
-2c. Create and submit analyzer jobs, provide working directory name, filelist name, and total number of jobs:
+2c. Download the latest JSON file and define path to him in L16 of **muAlAnalyzer_Data_cfg.py**.
+
+2d. Create and submit analyzer jobs, provide working directory name, filelist name, and total number of jobs:
 
     python createJobs.py $WORKDIR$ $FILELIST$ $N_JOBS$
     source submit.sh
     
-2d. hadd outout ROOT files into a single ROOT file.
+2e. hadd outout ROOT files into a single ROOT file.
 
 ---
 ## Plotting
