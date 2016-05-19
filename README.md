@@ -39,4 +39,18 @@ Checkout the physics validation code
     python createJobs.py $WORKDIR$ $FILELIST$ $N_JOBS$
     source submit.sh
     
-2d. hadd outout ROOT file into a single ROOT file.
+2d. hadd outout ROOT files into a single ROOT file.
+
+3. Plotting
+
+3a. Change directory to PerformancePlots:
+
+    cd ../PerformancePlots
+
+3b. Use **comp_v2.py** to create a new python script
+
+3c. Set location of ROOT files in L5.
+
+3d. Edit list of samples in L17-22.
+
+3e. Edit list of comparisons in L40-45 (each list defines what samples will be compared).
