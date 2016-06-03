@@ -12,6 +12,8 @@ export AFSDIR=`pwd`
 export IJOB=%d
 export INPUTFILES='%s'
 
+export SCRAM_ARCH=slc6_amd64_gcc530
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 eval `scramv1 run -sh`
 cp %s $CAFDIR/
 cd $CAFDIR/
@@ -24,7 +26,7 @@ rm *root
 """ % (pwd, i, inputNames, cfg, cfg, wd))
 
 working_dir = "refit_PromptGT_TrackerMay2016_v1"
-file_list = "SingleMuon_Run2016B_ZMu_v1_v2_files.py"
+file_list = "SingleMuon_Run2016B_ZMu_v2_files.py"
 njobs = 500
 cfg = "refit_PromptGT_TrackerMay2016_cfg.py"
 
@@ -38,7 +40,7 @@ os.system("rm -rf %s; mkdir %s" % (working_dir, working_dir))
 execfile(file_list)
 
 bsubfile = ["#!/bin/sh", ""]
-bsubfile.append("cd %s" % working_dir)
+#bsubfile.append("cd %s" % working_dir)
 
 for i in range(njobs):
     inputNames = " ".join(fileNames[len(fileNames)*i/njobs:len(fileNames)*(i+1)/njobs])
@@ -50,6 +52,6 @@ for i in range(njobs):
 
 bsubfile.append("cd ..")
 bsubfile.append("")
-file("submit.sh", "w").write("\n".join(bsubfile))
-os.system("chmod +x submit.sh")
+file(working_dir+"/submit.sh", "w").write("\n".join(bsubfile))
+os.system("chmod +x "+working_dir+"/submit.sh")
 

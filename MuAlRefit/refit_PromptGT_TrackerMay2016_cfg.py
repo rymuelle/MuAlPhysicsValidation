@@ -66,10 +66,10 @@ process.muAlMuons.globalTrackQualityInputTag = cms.InputTag('muAlGlbTrackQual')
 #process.muAlMuons.fillGlobalTrackRefits = cms.bool(False)
 
 # This is to load new CondDB
-from CondCore.DBCommon.CondDBSetup_cfi import *
+#from CondCore.DBCommon.CondDBSetup_cfi import *
+from CondCore.CondDB.CondDB_cfi import *
 
 # New Tracker geometry released in May 2016
---------------%<-------------------------
 process.GlobalTag.toGet = cms.VPSet(
         ###### starts customization of tracker part
          cms.PSet(record = cms.string("TrackerAlignmentRcd"),
@@ -85,7 +85,6 @@ process.GlobalTag.toGet = cms.VPSet(
                   connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS')
                   )
 )
----------------->%------------------------
 
 # Muon geometry
 '''
