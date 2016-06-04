@@ -38,17 +38,17 @@ os.system("cp muAlAnalyzer_Data_cfg.py %s" % working_dir)
 execfile(file_list)
 
 bsubfile = ["#!/bin/sh", ""]
-bsubfile.append("cd %s" % working_dir)
+#bsubfile.append("cd %s" % working_dir)
 
 for i in range(njobs):
     inputNames = " ".join(fileNames[len(fileNames)*i/njobs:len(fileNames)*(i+1)/njobs])
     analyzer = "%s/analyzer%03d.sh" % (working_dir, i)
-    writeCfg(analyzer, inputNames, str(os.getcwdu()), i, working_dir)
+    writeCfg(analyzer, inputNames, str(os.getcwdu())+"/"+working_dir, i, working_dir)
     os.system("chmod +x %s" % analyzer)
     bsubfile.append("echo %s/analyzer%03d.sh" % (working_dir, i))
     bsubfile.append("bsub -R \"type==SLC6_64\" -q cmscaf1nd -J \"analyzer%03d\" -u a@b analyzer%03d.sh" % (i,i))
 
-bsubfile.append("cd ..")
+#bsubfile.append("cd ..")
 bsubfile.append("")
 file(working_dir+"/submit.sh", "w").write("\n".join(bsubfile))
 os.system("chmod +x "+working_dir+"/submit.sh")
