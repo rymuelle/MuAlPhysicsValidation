@@ -87,25 +87,36 @@ process.GlobalTag.toGet = cms.VPSet(
 )
 
 # Muon geometry
-'''
 process.muonDtAlignment = cms.ESSource("PoolDBESSource", CondDBSetup,
-                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2015-05_data_StartupRun2/74X_dataRun2_Prompt_v0_AlignmentRcd.db'),
+                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2016-05_data_FirstAlignmentWithRun2016B/data_DT-1100-110001_SingleMuon_Run2016B-PromptReco_MuAlCalIsolatedMu-v3_RECO_8_0_8_pt20_LatestCond2_03.db'),
                                      toGet   = cms.VPSet(cms.PSet(record = cms.string("DTAlignmentRcd"),  tag = cms.string("DTAlignmentRcd")))
                                      )
 process.es_prefer_muonDtAlignment = cms.ESPrefer("PoolDBESSource","muonDtAlignment")
 
 process.muonCscAlignment = cms.ESSource("PoolDBESSource", CondDBSetup,
-                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2015-05_data_StartupRun2/74X_dataRun2_Prompt_v0_AlignmentRcd.db'),
+                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2016-05_data_FirstAlignmentWithRun2016B/data_CSC-1100-100001_SingleMuon_Run2016B-PromptReco_MuAlCalIsolatedMu-v3_RECO_8_0_8_pt20_LatestCond2_Shifted_03.db'),
                                      toGet   = cms.VPSet(cms.PSet(record = cms.string("CSCAlignmentRcd"), tag = cms.string("CSCAlignmentRcd")))
                                      )
 process.es_prefer_muonCscAlignment = cms.ESPrefer("PoolDBESSource","muonCscAlignment")
 
 process.globalPosition = cms.ESSource("PoolDBESSource", CondDBSetup,
-                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2015-05_data_StartupRun2/GPR_Apr30_2015_CRAFT15_v1_GR_P_V50_muHW_tkhp1109_dL4_iter1_cfg.db'),
+                                     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_MUONALIGN/www/muonGeometries/2016-05_data_FirstAlignmentWithRun2016B/GPR_May24_2016_SW808_gprGT_Tk_MP_Run2016B_v2_dL4_iter1.db'),
                                      toGet   = cms.VPSet(cms.PSet(record = cms.string("GlobalPositionRcd"), tag = cms.string("IdealGeometry")))
                                      )
 process.es_prefer_globalPosition = cms.ESPrefer("PoolDBESSource","globalPosition")
-'''
+
+# Asymptotic Muon APEs
+process.GlobalTag.toGet = cms.VPSet(
+         cms.PSet(record = cms.string("CSCAlignmentErrorExtendedRcd"),
+                  tag =  cms.string("MuonCSCAPEObjectsExtended_v0_mc"),
+                  connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                  ),
+         cms.PSet(record = cms.string("DTAlignmentErrorExtendedRcd"),
+                  tag =  cms.string("MuonDTAPEObjectsExtended_v0_mc"),
+                  connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                  )
+)
+
 
 process.Path = cms.Path(process.MeasurementTrackerEvent * process.muAlGeneralTracks * process.muAlAncientMuonSeed * process.muAlStandAloneMuons * process.muAlGlobalMuons * process.muAlTevMuons * process.muAlGlbTrackQual * process.muAlMuons)
 
