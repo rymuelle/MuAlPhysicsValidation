@@ -12,6 +12,7 @@ export AFSDIR=`pwd`
 export IJOB=%d
 export INPUTFILES='%s'
 
+export SCRAM_ARCH=slc6_amd64_gcc530
 eval `scramv1 run -sh`
 cp muAlAnalyzer_Data_cfg.py $CAFDIR/
 cd $CAFDIR/
@@ -49,6 +50,6 @@ for i in range(njobs):
 
 bsubfile.append("cd ..")
 bsubfile.append("")
-file("submit.sh", "w").write("\n".join(bsubfile))
-os.system("chmod +x submit.sh")
+file(working_dir+"/submit.sh", "w").write("\n".join(bsubfile))
+os.system("chmod +x "+working_dir+"/submit.sh")
 

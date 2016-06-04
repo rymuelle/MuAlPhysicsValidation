@@ -68,6 +68,10 @@ class MuAlAnalyzer : public edm::EDAnalyzer {
   
   edm::InputTag m_recoMuons;    // Label to access reconstructed muons
   edm::InputTag m_genParticles; // Label to access generator particles
+  edm::InputTag m_recoBeamSpot;
+  
+  edm::EDGetTokenT<reco::MuonCollection> recoMuonCollectionToken_;
+  edm::EDGetTokenT<reco::BeamSpot> recoBeamSpotToken_;
   
   bool  m_fillGenMuons;
   Int_t m_genMuonMotherId;
@@ -223,7 +227,13 @@ MuAlAnalyzer::MuAlAnalyzer( const edm::ParameterSet& iConfig ) {
 	if ( m_fillGenMuons ) m_genParticles    = iConfig.getParameter<edm::InputTag>("genParticles");
 	
 	m_fillRecoMuons = iConfig.getParameter<bool>("fillRecoMuons");
-	if ( m_fillRecoMuons ) m_recoMuons = iConfig.getParameter<edm::InputTag>("recoMuons");
+	if ( m_fillRecoMuons ) {
+	  m_recoMuons = iConfig.getParameter<edm::InputTag>("recoMuons");
+	  recoMuonCollectionToken_ = consumes<reco::MuonCollection,edm::InEvent>(m_recoMuons);
+	}
+	
+	m_recoBeamSpot = iConfig.getParameter<edm::InputTag>("recoBeamSpot");
+  recoBeamSpotToken_ = consumes<reco::BeamSpot,edm::InEvent>( m_recoBeamSpot );
 	
 	m_fillRecoDimuons = iConfig.getParameter<bool>("fillRecoDimuons");
 	
@@ -504,12 +514,15 @@ void MuAlAnalyzer::analyze( const edm::Event& iEvent, const edm::EventSetup& iSe
   std::vector<int> recoMuonsGlbMatchToGen;
   
   if ( m_fillRecoMuons ) {
-  
+    
+//    consumes<reco::MuonCollection,edm::InRun>(m_recoMuons);
     edm::Handle<reco::MuonCollection> recoMuonCollection;
-	  iEvent.getByLabel(m_recoMuons, recoMuonCollection);
+//	  iEvent.getByLabel(m_recoMuons, recoMuonCollection);
+	  iEvent.getByToken(recoMuonCollectionToken_, recoMuonCollection);
 	
 	  edm::Handle<reco::BeamSpot> beamspot;
-    iEvent.getByLabel("offlineBeamSpot", beamspot);
+//    iEvent.getByLabel("offlineBeamSpot", beamspot);
+    iEvent.getByToken(recoBeamSpotToken_, beamspot);
 
 	  if ( recoMuonCollection.isValid() ) {
 		  for (reco::MuonCollection::const_iterator muon = recoMuonCollection->begin();  muon != recoMuonCollection->end();  ++muon) {
@@ -517,7 +530,7 @@ void MuAlAnalyzer::analyze( const edm::Event& iEvent, const edm::EventSetup& iSe
 				  if (    muon->globalTrack()->normalizedChi2()   < 10
 				       && muon->innerTrack()->numberOfValidHits() > 10
 				       && muon->numberOfMatchedStations() > 1
-				       && fabs( muon->innerTrack()->dxy( beamspot->position() ) ) < 0.2 && muon->innerTrack()->pt() > 60.0) {
+				       && fabs( muon->innerTrack()->dxy( beamspot->position() ) ) < 0.2 && muon->innerTrack()->pt() > 30.0) {
 				        recoMuonsSelected.push_back(&*muon);
 				  }
 			  }
